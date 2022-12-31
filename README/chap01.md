@@ -64,8 +64,211 @@ public class Theater {
 
 - 관람객과 판매원이 자신의 일을 스스로 처리하도록 변경한다.
 	- 관람객과 판매원이 자신의 일을 스스로 처리한다는 직관을 살릴 수 있다.
-	- `Theater`가 관람객과 판매원의 내부 정보를 몰라도 되어서 결합도가 떨어진다.
+	- `Theater`가 관람객과 판매원의 내부 정보를 몰라도 되어서 결합도가 떨어진다. 즉, 변경이 용이한 코드를 작성할 수 있다.
 
-따라서 관람객과 판매원을 **자율적인 존재**로 만든다.
+즉, 관람객과 판매원을 **자율적인 존재**로 만든다.
 
 `TicketOffice`에 접근하는 모든 코드를 `TicketSeller` 내부로 숨긴다.
+
+기존 `Theater` 클래스
+
+```java
+public class Theater {  
+    private TicketSeller ticketSeller;  
+  
+    public Theater(TicketSeller ticketSeller) {  
+        this.ticketSeller = ticketSeller;  
+    }  
+  
+    public void enter(Audience audience) {  
+        if (audience.getBag().hasInvitation()) {  
+            Ticket ticket = ticketSeller.getTicketOffice().getTicket();  
+            audience.getBag().setTicket(ticket);  
+        } else {  
+            Ticket ticket = ticketSeller.getTicketOffice().getTicket();  
+            audience.getBag().minusAmount(ticket.getFee());  
+            ticketSeller.getTicketOffice().plusAmount(ticket.getFee());  
+            audience.getBag().setTicket(ticket);  
+        }  
+    }  
+}
+```
+
+변경된 `Theater` 클래스
+
+```java
+public class Theater {  
+    private TicketSeller ticketSeller;  
+  
+    public Theater(TicketSeller ticketSeller) {  
+        this.ticketSeller = ticketSeller;  
+    }  
+  
+    public void enter(Audience audience) {  
+        ticketSeller.sellTo(audience);  
+    }  
+}
+```
+
+위처럼 티켓 판매에 대한 역할을 `TicketSeller`에게로 변경했다. 이로써 `Theater`클래스는 `TicketOffice`와 `Ticket`, `Audience` 및 `Bag`에 대한 의존성을 줄여 결합도를 떨어뜨릴 수 있게 되었다.
+
+`Theater`클래스는 `TicketSeller`의 인터페이스에만 의존한다. 객체를 인터페이스와 구현으로 나누고 인터페이스만을 공개하는 것은 객체 사이의 결합도를 낮추고 변경하기 쉬운 코드를 작성하기 쉽게 한다.
+
+이제 `TicketSeller` 클래스를 살펴보자.
+
+기존 `TicketSeller`클래스
+
+```java
+public class TicketSeller {  
+    private TicketOffice ticketOffice;  
+  
+    public TicketSeller(TicketOffice ticketOffice) {  
+        this.ticketOffice = ticketOffice;  
+    }  
+  
+    public TicketOffice getTicketOffice() {  
+        return ticketOffice;  
+    }  
+}
+```
+
+변경된 `TicketSeller` 클래스
+
+```java
+public class TicketSeller {  
+    private TicketOffice ticketOffice;  
+  
+    public TicketSeller(TicketOffice ticketOffice) {  
+        this.ticketOffice = ticketOffice;  
+    }  
+  
+    public void sellTo(Audience audience) {  
+        ticketOffice.plusAmount(audience.buy(ticketOffice.getTicket()));  
+    }  
+}
+```
+
+결과적으로 `TicketOffice`에 대한 접근은 오직 `TicketSeller` 안에만 존재하게 되었다. 이처럼 개념적이 물리적으로 객체 내부의 세부적인 사항을 감추는 것을 **캡슐화**라고 한다. 캡슐화를 통해 객체 내부로의 접근을 제한하면 객체와 객체 사이의 결합도를 낮출 수 있게 된다. 이로써 설계 변경을 더 쉽게 할 수 있게된다.
+
+`Audience`와 `Bag`에도 같은 원칙을 적용해 보자.
+
+기존 `Audience` 클래스
+
+```java
+public class Audience {  
+    private Bag bag;  
+  
+    public Audience(Bag bag) {  
+        this.bag = bag;  
+    }  
+  
+    public Bag getBag() {  
+        return bag;  
+    }  
+}
+```
+
+변경된 `Audience` 클래스
+
+```java
+public class Audience {  
+    private Bag bag;  
+  
+    public Audience(Bag bag) {  
+        this.bag = bag;  
+    }  
+  
+    public Long buy(Ticket ticket) {  
+        if (bag.hasInvitation()) {  
+            bag.setTicket(ticket);  
+            return 0L;  
+        } else {  
+            bag.setTicket(ticket);  
+            bag.minusAmount(ticket.getFee());  
+            return ticket.getFee();  
+        }  
+    }  
+}
+```
+
+기존 `Bag` 클래스
+
+```java
+public class Bag {  
+    private Long amount;  
+    private Invitation invitation;  
+    private Ticket ticket;  
+  
+    public Bag(long amount) {  
+        this(null, amount);  
+    }  
+  
+    public Bag(Invitation invitation, long amount) {  
+        this.invitation = invitation;  
+        this.amount = amount;  
+    }  
+  
+    public boolean hasInvitation() {  
+        return invitation != null;  
+    }  
+  
+    public boolean hasTicket() {  
+        return ticket != null;  
+    }  
+  
+    public void setTicket(Ticket ticket) {  
+        this.ticket = ticket;  
+    }  
+  
+    public void minusAmount(Long amount) {  
+        this.amount -= amount;  
+    }  
+  
+    public void plusAmount(Long amount) {  
+        this.amount += amount;  
+    }  
+}
+```
+
+변경된 `Bag` 클래스
+
+```java  
+public class Bag {  
+    private Long amount;  
+    private Ticket ticket;  
+    private Invitation invitation;  
+  
+    public Long hold(Ticket ticket) {  
+        if (hasInvitation()) {  
+            setTicket(ticket);  
+            return 0L;  
+        } else {  
+            setTicket(ticket);  
+            minusAmount(ticket.getFee());  
+            return ticket.getFee();  
+        }  
+    }  
+  
+    private void setTicket(Ticket ticket) {  
+        this.ticket = ticket;  
+    }  
+  
+    private boolean hasInvitation() {  
+        return invitation != null;  
+    }  
+  
+    private void minusAmount(Long amount) {  
+        this.amount -= amount; 
+}
+```
+
+이로서 `Bag`에 대한 정보를 `Audience`안에 캡슐화 시켜 결합도를 낮추고 변경이 용이한 코드로 변경되었다.
+
+> 자신과 밀접하게 연관된 작업만을 수행하고 직접적 연관성이 없는 작업은 다른 객체에게 위임하는 것을 가르켜 **응집도**가 높다고 한다.
+ 
+자신의 데이터를 스스로 처리하는 지율적인 객체를 만들면 결합도를 낮출 수 있을뿐더러 응집도를 높일 수 있다.
+
+### 트레이드 오프
+
+하지만 스스로 자신의 데이터를 책임지는 **자율성**을 높이는 것이 항상 결합도를 낮추는 것은 아니다. 특정 객체의 자율성을 높이는 행위가 전체 설계에서의 결합도에 영향을 주지 못하고나 심지어는 증가시킬 수 있다. 이럴 때는 적절한 선택을 통해 균형있는 설계를 만들어야 할 것이다.
+
