@@ -1,6 +1,6 @@
 package org.example.object.chap02;
 
-public class AmountDiscountPolicy extends DiscountPolicy {
+public class AmountDiscountPolicy extends DefaultDiscountPolicy {
 
 	private Money discountAmount;
 

@@ -1,10 +1,10 @@
 package org.example.object.chap02;
 
-public class PercentDiscountPolicy extends DiscountPolicy {
+public class PercentDefaultDiscountPolicy extends DefaultDiscountPolicy {
 
 	private double percent;
 
-	public PercentDiscountPolicy(double percent, DiscountCondition... discountConditions) {
+	public PercentDefaultDiscountPolicy(double percent, DiscountCondition... discountConditions) {
 		super(discountConditions);
 		this.percent = percent;
 	}
