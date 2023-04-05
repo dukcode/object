@@ -16,39 +16,21 @@ public class DiscountCondition {
 		return type;
 	}
 
-	public void setType(DiscountConditionType type) {
-		this.type = type;
+	public boolean isDiscountable(DayOfWeek dayOfWeek, LocalTime time) {
+		if (type != DiscountConditionType.PERIOD) {
+			throw new IllegalArgumentException();
+		}
+
+		return this.dayOfWeek.equals(dayOfWeek) &&
+			this.startTime.isBefore(time) &&
+			this.endTime.isAfter(time);
 	}
 
-	public int getSequence() {
-		return sequence;
-	}
+	public boolean isDiscountable(int sequence) {
+		if (type != DiscountConditionType.SEQUENCE) {
+			throw new IllegalArgumentException();
+		}
 
-	public void setSequence(int sequence) {
-		this.sequence = sequence;
-	}
-
-	public DayOfWeek getDayOfWeek() {
-		return dayOfWeek;
-	}
-
-	public void setDayOfWeek(DayOfWeek dayOfWeek) {
-		this.dayOfWeek = dayOfWeek;
-	}
-
-	public LocalTime getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(LocalTime startTime) {
-		this.startTime = startTime;
-	}
-
-	public LocalTime getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(LocalTime endTime) {
-		this.endTime = endTime;
+		return this.sequence == sequence;
 	}
 }
