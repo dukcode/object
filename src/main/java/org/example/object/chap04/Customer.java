@@ -1,4 +1,4 @@
-package org.example.object.chap03;
+package org.example.object.chap04;
 
 public class Customer {
 	private String name;
