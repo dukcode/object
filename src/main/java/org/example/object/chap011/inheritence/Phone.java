@@ -1,7 +1,10 @@
-package org.example.object.chap011;
+package org.example.object.chap011.inheritence;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.example.object.chap011.call.Call;
+import org.example.object.chap011.money.Money;
 
 public abstract class Phone {
 	private List<Call> calls = new ArrayList<>();
@@ -19,5 +22,9 @@ public abstract class Phone {
 
 	protected Money afterCalculated(Money fee) {
 		return fee;
+	}
+
+	public List<Call> getCalls() {
+		return calls;
 	}
 }

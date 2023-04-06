@@ -1,4 +1,4 @@
-package org.example.object.chap011;
+package org.example.object.chap011.money;
 
 import java.math.BigDecimal;
 

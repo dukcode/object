@@ -1,6 +1,8 @@
-package org.example.object.chap011;
+package org.example.object.chap011.inheritence;
 
 import java.time.Duration;
+
+import org.example.object.chap011.money.Money;
 
 public class RateDiscountableRegularPhone extends RegularPhone {
 
