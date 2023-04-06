@@ -13,13 +13,10 @@ public class NightlyDiscountPhone {
 	private Duration seconds;
 	private List<Call> calls = new ArrayList<>();
 
-	private double taxRate;
-
-	public NightlyDiscountPhone(Money nightlyAmount, Money regularAmount, Duration seconds, double taxRate) {
+	public NightlyDiscountPhone(Money nightlyAmount, Money regularAmount, Duration seconds) {
 		this.nightlyAmount = nightlyAmount;
 		this.regularAmount = regularAmount;
 		this.seconds = seconds;
-		this.taxRate = taxRate;
 	}
 
 	public void call(Call call) {
@@ -37,6 +34,6 @@ public class NightlyDiscountPhone {
 			}
 		}
 
-		return result.plus(result.times(taxRate));
+		return result;
 	}
 }
