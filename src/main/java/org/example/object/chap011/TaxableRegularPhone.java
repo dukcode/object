@@ -12,8 +12,7 @@ public class TaxableRegularPhone extends RegularPhone {
 	}
 
 	@Override
-	protected Money calculateCallFee(Call call) {
-		Money fee = super.calculateCallFee(call);
+	protected Money afterCalculated(Money fee) {
 		return fee.plus(fee.times(taxRate));
 	}
 }
