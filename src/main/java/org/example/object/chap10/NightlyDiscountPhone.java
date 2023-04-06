@@ -1,4 +1,4 @@
-package org.example.object.chap010;
+package org.example.object.chap10;
 
 import java.time.Duration;
 

@@ -1,9 +1,9 @@
-package org.example.object.chap011.inheritence;
+package org.example.object.chap11.inheritence;
 
 import java.time.Duration;
 
-import org.example.object.chap011.call.Call;
-import org.example.object.chap011.money.Money;
+import org.example.object.chap11.call.Call;
+import org.example.object.chap11.money.Money;
 
 public class NightlyDiscountPhone extends Phone {
 

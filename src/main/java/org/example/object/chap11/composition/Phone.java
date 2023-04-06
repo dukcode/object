@@ -1,10 +1,10 @@
-package org.example.object.chap011.composition;
+package org.example.object.chap11.composition;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.example.object.chap011.call.Call;
-import org.example.object.chap011.money.Money;
+import org.example.object.chap11.call.Call;
+import org.example.object.chap11.money.Money;
 
 public class Phone {
 	private RatePolicy ratePolicy;
