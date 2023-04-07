@@ -1,8 +1,7 @@
-package org.example.object.chap14;
+package org.example.object.chap14.billing.step1;
 
 import java.time.Duration;
 
-import org.example.object.chap14.call.Call;
 import org.example.object.chap14.money.Money;
 
 public class DurationDiscountRule extends FixedFeePolicy {
@@ -16,7 +15,7 @@ public class DurationDiscountRule extends FixedFeePolicy {
 		this.to = to;
 	}
 
-	public Money calculate(Call call) {
+	public Money calculate(DurationDiscountPolicy.Call call) {
 		if (call.getDuration().compareTo(to) > 0) {
 			return Money.ZERO;
 		}
@@ -26,7 +25,7 @@ public class DurationDiscountRule extends FixedFeePolicy {
 		}
 
 		Phone phone = new Phone(null);
-		phone.call(new Call(call.getFrom().plus(from),
+		phone.call(new DurationDiscountPolicy.Call(call.getFrom().plus(from),
 			call.getDuration().compareTo(to) > 0 ? call.getFrom().plus(to) : call.getTo()));
 		return super.calculateFee(phone);
 	}

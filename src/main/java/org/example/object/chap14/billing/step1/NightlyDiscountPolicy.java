@@ -1,8 +1,7 @@
-package org.example.object.chap14;
+package org.example.object.chap14.billing.step1;
 
 import java.time.Duration;
 
-import org.example.object.chap14.call.Call;
 import org.example.object.chap14.money.Money;
 
 public class NightlyDiscountPolicy extends BasicRatePolicy {
@@ -20,7 +19,7 @@ public class NightlyDiscountPolicy extends BasicRatePolicy {
 	}
 
 	@Override
-	protected Money calculateCallFee(Call call) {
+	protected Money calculateCallFee(DurationDiscountPolicy.Call call) {
 		if (call.getFrom().getHour() >= LATE_NIGHT_HOUR) {
 			return nightAmount.times(call.getDuration().getSeconds() / seconds.getSeconds());
 		}

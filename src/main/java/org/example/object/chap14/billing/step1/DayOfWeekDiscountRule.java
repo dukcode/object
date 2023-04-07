@@ -1,4 +1,4 @@
-package org.example.object.chap14;
+package org.example.object.chap14.billing.step1;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.object.chap14.money.Money;
+import org.example.object.chap14.time.DateTimeInterval;
 
 public class DayOfWeekDiscountRule {
 	private List<DayOfWeek> dayOfWeeks = new ArrayList<>();

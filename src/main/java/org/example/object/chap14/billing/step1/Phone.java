@@ -1,20 +1,19 @@
-package org.example.object.chap14;
+package org.example.object.chap14.billing.step1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.example.object.chap14.call.Call;
 import org.example.object.chap14.money.Money;
 
 public class Phone {
 	private RatePolicy ratePolicy;
-	private List<Call> calls = new ArrayList<>();
+	private List<DurationDiscountPolicy.Call> calls = new ArrayList<>();
 
 	public Phone(RatePolicy ratePolicy) {
 		this.ratePolicy = ratePolicy;
 	}
 
-	public List<Call> getCalls() {
+	public List<DurationDiscountPolicy.Call> getCalls() {
 		return calls;
 	}
 
@@ -22,7 +21,7 @@ public class Phone {
 		return ratePolicy.calculateFee(this);
 	}
 
-	public void call(Call call) {
+	public void call(DurationDiscountPolicy.Call call) {
 		calls.add(call);
 	}
 }

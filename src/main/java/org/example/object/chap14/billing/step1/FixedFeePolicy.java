@@ -1,8 +1,7 @@
-package org.example.object.chap14;
+package org.example.object.chap14.billing.step1;
 
 import java.time.Duration;
 
-import org.example.object.chap14.call.Call;
 import org.example.object.chap14.money.Money;
 
 public class FixedFeePolicy extends BasicRatePolicy {
@@ -16,7 +15,7 @@ public class FixedFeePolicy extends BasicRatePolicy {
 	}
 
 	@Overridex
-	protected Money calculateCallFee(Call call) {
+	protected Money calculateCallFee(DurationDiscountPolicy.Call call) {
 		return amount.times(call.getDuration().getSeconds() / seconds.getSeconds());
 	}
 }

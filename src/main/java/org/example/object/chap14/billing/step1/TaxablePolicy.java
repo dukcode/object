@@ -1,4 +1,4 @@
-package org.example.object.chap14;
+package org.example.object.chap14.billing.step1;
 
 import org.example.object.chap14.money.Money;
 
