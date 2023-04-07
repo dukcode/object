@@ -15,7 +15,7 @@ public class DurationDiscountRule extends FixedFeePolicy {
 		this.to = to;
 	}
 
-	public Money calculate(DurationDiscountPolicy.Call call) {
+	public Money calculate(Call call) {
 		if (call.getDuration().compareTo(to) > 0) {
 			return Money.ZERO;
 		}
@@ -25,7 +25,7 @@ public class DurationDiscountRule extends FixedFeePolicy {
 		}
 
 		Phone phone = new Phone(null);
-		phone.call(new DurationDiscountPolicy.Call(call.getFrom().plus(from),
+		phone.call(new Call(call.getFrom().plus(from),
 			call.getDuration().compareTo(to) > 0 ? call.getFrom().plus(to) : call.getTo()));
 		return super.calculateFee(phone);
 	}

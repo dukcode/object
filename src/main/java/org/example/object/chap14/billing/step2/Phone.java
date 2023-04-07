@@ -1,4 +1,4 @@
-package org.example.object.chap14.billing.step1;
+package org.example.object.chap14.billing.step2;
 
 import java.util.ArrayList;
 import java.util.List;

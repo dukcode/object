@@ -14,8 +14,8 @@ public class FixedFeePolicy extends BasicRatePolicy {
 		this.seconds = seconds;
 	}
 
-	@Overridex
-	protected Money calculateCallFee(DurationDiscountPolicy.Call call) {
+	@Override
+	protected Money calculateCallFee(Call call) {
 		return amount.times(call.getDuration().getSeconds() / seconds.getSeconds());
 	}
 }

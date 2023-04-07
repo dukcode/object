@@ -14,7 +14,7 @@ public class DayOfWeekDiscountPolicy extends BasicRatePolicy {
 	}
 
 	@Override
-	protected Money calculateCallFee(DurationDiscountPolicy.Call call) {
+	protected Money calculateCallFee(Call call) {
 		Money result = Money.ZERO;
 		for (DateTimeInterval interval : call.splitByDay()) {
 			for (DayOfWeekDiscountRule rule : rules) {

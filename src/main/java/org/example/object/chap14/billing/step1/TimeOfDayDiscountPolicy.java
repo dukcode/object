@@ -16,7 +16,7 @@ public class TimeOfDayDiscountPolicy extends BasicRatePolicy {
 	private List<Money> amounts = new ArrayList<>();
 
 	@Override
-	protected Money calculateCallFee(DurationDiscountPolicy.Call call) {
+	protected Money calculateCallFee(Call call) {
 		Money result = Money.ZERO;
 		for (DateTimeInterval interval : call.splitByDay()) {
 			for (int idx = 0; idx < starts.size(); idx++) {
